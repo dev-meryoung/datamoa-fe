@@ -1,16 +1,12 @@
 import styled from 'styled-components';
 import Layout from '../components/layout/Layout';
 
-const Witt = () => {
+const Toilet = () => {
   return (
     <Layout>
       <Wrapper>
         <Content>
-          <h1>위트</h1>
-          <h1>위트</h1>
-          <h1>위트</h1>
-          <h1>위트</h1>
-          <h1>위트</h1>
+          <h1>화장실 위치 찾기</h1>
         </Content>
       </Wrapper>
     </Layout>
@@ -27,4 +23,4 @@ const Wrapper = styled.div`
 
 const Content = styled.main``;
 
-export default Witt;
+export default Toilet;

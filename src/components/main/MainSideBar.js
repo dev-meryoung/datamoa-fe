@@ -1,0 +1,112 @@
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import styled, { keyframes } from 'styled-components';
+
+const SideBar = (props) => {
+  const sideBarClicked = props.clicked;
+  const sideBarClickedHandler = props.fx;
+
+  // 사이드바를 닫기 위한 State 값
+  const [closeSideBar, setCloseSideBar] = useState('none');
+
+  // 사이드바의 X모양 버튼이나 배경이 클릭 시 동작 함수
+  const closeSideBarHandler = () => {
+    setCloseSideBar('none');
+    sideBarClickedHandler();
+  };
+
+  // sideBarClicked 값의 변화를 감지해 변화가 생길 때마다 SideBar의 display 값 변화 및 배경 고정
+  useEffect(() => {
+    if (sideBarClicked) {
+      setCloseSideBar('flex');
+      document.body.classList.add('freeze');
+    } else {
+      setCloseSideBar('none');
+      document.body.classList.remove('freeze');
+    }
+  }, [sideBarClicked]);
+
+  return (
+    <>
+      <SideBarBackground onClick={closeSideBarHandler} display={closeSideBar} />
+      <SideMenu display={closeSideBar}>
+        <SideBtnWrapper>
+          <SideXBtn
+            className="fa-solid fa-xmark fa-3x"
+            onClick={closeSideBarHandler}
+          />
+        </SideBtnWrapper>
+        <SideMenuList>
+          <ul>
+            <SideMenuCategory>위치 찾기</SideMenuCategory>
+            <SideMenuTitle>
+              ─ <Link to="/toilet">화장실 찾기</Link>
+            </SideMenuTitle>
+            <SideMenuTitle>
+              ─ <Link to="/">복권방 찾기(미완성)</Link>
+            </SideMenuTitle>
+          </ul>
+        </SideMenuList>
+      </SideMenu>
+    </>
+  );
+};
+
+const animation = keyframes`
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+`;
+
+const SideBarBackground = styled.div`
+  display: ${(props) => props.display || 'flex'};
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  animation: ${animation} 500ms ease;
+`;
+
+const SideMenu = styled.div`
+  display: ${(props) => props.display || 'flex'};
+  position: fixed;
+  width: 30%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  background-color: white;
+  border-left: 5rem solid var(--color-main-blue);
+  z-index: 1;
+  animation: ${animation} 500ms ease;
+`;
+
+const SideBtnWrapper = styled.div`
+  position: relative;
+  top: 1rem;
+  left: -3.5rem;
+`;
+
+const SideXBtn = styled.i`
+  color: white;
+  transition: all 300ms ease;
+  &:hover {
+    color: black;
+  }
+`;
+
+const SideMenuList = styled.div`
+  display: flex;
+  margin-top: 3rem;
+  margin-left: 1rem;
+`;
+
+const SideMenuCategory = styled.h2``;
+const SideMenuTitle = styled.li``;
+
+export default SideBar;

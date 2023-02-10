@@ -8,7 +8,7 @@ import useEscKeyClose from '../../utils/useEscKeyClose';
 
 import MainSideBar from './MainSideBar';
 
-const Header = () => {
+const Header = (props) => {
   // 사이드바 버튼의 클릭을 감지하기 위한 State 값
   const [sideBarClicked, setSideBarClicked] = useState(false);
 
@@ -33,7 +33,11 @@ const Header = () => {
             onClick={sideBarClickedHandler}
           />
         </SideBtnWrapper>
-        <MainSideBar clicked={sideBarClicked} fx={sideBarClickedHandler} />
+        <MainSideBar
+          clicked={sideBarClicked}
+          fx={sideBarClickedHandler}
+          sideBarMenuData={props.sideBarMenuData}
+        />
       </>
     </Wrapper>
   );

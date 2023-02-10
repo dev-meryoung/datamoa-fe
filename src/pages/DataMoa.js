@@ -1,19 +1,11 @@
 import styled from 'styled-components';
 import axios from 'axios';
-
 import { API } from '../config';
 
 import Layout from '../components/layout/Layout';
 
 const DataMoa = () => {
-  // AXIOS 통신을 이용해 메인 페이지 UI 구현에 필요한 데이터를 가져와 get 함수에 연결
-
-  // axios
-  //   .get(API.CATEGORY)
-  //   .then((response) => response.data)
-  //   .then((data) => console.log(data.result));
-  // 결과
-  const cResult = [
+  const categoryData = [
     {
       categoryId: 1,
       categoryTitle: '위치 찾기',
@@ -35,14 +27,18 @@ const DataMoa = () => {
         },
       ],
     },
+    {
+      categoryId: 3,
+      categoryTitle: '테스트 2',
+      pageIdArray: [
+        {
+          pageId: 4,
+        },
+      ],
+    },
   ];
 
-  // axios
-  //   .get(API.SUBPAGE)
-  //   .then((response) => response.data)
-  //   .then((data) => console.log(data.result));
-  // 결과
-  const sResult = [
+  const subPageData = [
     {
       pageId: 1,
       pageTitle: '화장실 찾기',
@@ -64,13 +60,52 @@ const DataMoa = () => {
       pageDescription: '주식 확인 페이지 설명입니다.',
       categoryId: 2,
     },
+    {
+      pageId: 4,
+      pageTitle: '주가 확인이라고용',
+      pageUrl: '/stock',
+      pageDescription: '주식 확인 페이지 설명입니다.',
+      categoryId: 3,
+    },
+    {
+      pageId: 5,
+      pageTitle: '주가 확인',
+      pageUrl: '/stock',
+      pageDescription: '주식 확인 페이지 설명입니다.',
+      categoryId: 2,
+    },
   ];
 
+  // 사이드바 메뉴를 구성하기 위한 데이터를 가공하는 함수
+  const getSideBarMenuData = (categoryData, subPageData) => {
+    const sideBarMenuData = [];
+
+    categoryData.forEach((ce) => {
+      const sideBarMenu = {
+        categoryId: '',
+        categoryTitle: '',
+        pageTitle: [],
+        pageUrl: [],
+      };
+      sideBarMenu.categoryId = ce.categoryId;
+      sideBarMenu.categoryTitle = ce.categoryTitle;
+      subPageData.forEach((se) => {
+        if (se.categoryId === ce.categoryId) {
+          sideBarMenu.pageTitle.push(se.pageTitle);
+          sideBarMenu.pageUrl.push(se.pageUrl);
+        }
+      });
+      sideBarMenuData.push(sideBarMenu);
+    });
+
+    return sideBarMenuData;
+  };
+
   return (
-    <Layout>
+    <Layout sideBarMenuData={getSideBarMenuData(categoryData, subPageData)}>
       <Wrapper>
         <Content>
-          <p>{}</p>
+          <h1>메인페이지</h1>
         </Content>
       </Wrapper>
     </Layout>

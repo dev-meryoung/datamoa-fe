@@ -1,4 +1,4 @@
-const BASE_URL = 'http://172.30.1.55:3000';
+const BASE_URL = 'http://192.168.195.43:3000';
 
 export const API = {
   CATEGORY: `${BASE_URL}/category`,

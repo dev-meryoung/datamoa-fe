@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
-import axios from 'axios';
-
-import { API } from '../../config';
 
 const VocModal = (props) => {
   // 현재 접속한 url의 경로명 확인

@@ -21,9 +21,8 @@ const Footer = () => {
     <Wrapper>
       <VocModal clicked={vocClicked} fx={vocClickedHandler} />
       <Copyrights>
-        Copyrights © 2023 All Rights Reserved by 팀디케이 Inc.　───
+        Copyrights © 2023 All Rights Reserved by 팀디케이 Inc.
       </Copyrights>
-      <VocBtn onClick={vocClickedHandler}>문의</VocBtn>
     </Wrapper>
   );
 };
@@ -36,16 +35,6 @@ const Wrapper = styled.footer`
   text-align: center;
   justify-content: center;
   border-top: 1px solid var(--color-dark-white);
-`;
-
-const VocBtn = styled.p`
-  padding: 0.3rem;
-  font-weight: bold;
-  cursor: pointer;
-
-  &:hover {
-    color: var(--color-main-blue);
-  }
 `;
 
 const Copyrights = styled.p`

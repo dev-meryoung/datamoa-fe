@@ -1,46 +1,11 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
+import { useState, useEffect } from 'react';
+
+import MainMenuListData from './MainMenuListData';
 
 const SideBar = (props) => {
   const sideBarClicked = props.clicked;
   const sideBarClickedHandler = props.fx;
-
-  // 사이드바 메뉴를 구성하기 위한 데이터
-  const sideBarMenuData = props.sideBarMenuData;
-
-  // 사이드바 메뉴를 렌더링하기 위한 함수
-  const sideBarMenuListRender = () => {
-    // 사이드바 메뉴의 페이지 타이틀 값을 렌더링하는 함수
-    const sideBarMenuTitle = (data) => {
-      // 타이틀 값을 담기 위한 빈 배열 생성
-      const sideBarMenuTitle = [];
-
-      // for문을 이용해 pageTitle의 개수만큼 반복해 렌더링 후 빈 배열에 추가
-      for (let i = 0; i < data.pageTitle.length; i++) {
-        sideBarMenuTitle.push(
-          <SideBarMenuTitle>
-            ─ <Link to={data.pageUrl[i]}>{data.pageTitle[i]}</Link>
-          </SideBarMenuTitle>
-        );
-      }
-
-      // 타이틀 값이 담긴 배열을 리턴
-      return sideBarMenuTitle;
-    };
-
-    // 최종 사이드바 메뉴 리스트를 렌더링해 리턴
-    const sideBarMenuList = sideBarMenuData.map((data) => {
-      return (
-        <>
-          <SideBarMenuCategory>{data.categoryTitle}</SideBarMenuCategory>
-          {sideBarMenuTitle(data)}
-        </>
-      );
-    });
-
-    return sideBarMenuList;
-  };
 
   // 사이드바를 닫기 위한 State 값
   const [closeSideBar, setCloseSideBar] = useState('none');
@@ -73,13 +38,16 @@ const SideBar = (props) => {
           />
         </SideBarBtnWrapper>
         <SideBarMenuWrapper>
-          <SideBarMenuList>{sideBarMenuListRender()}</SideBarMenuList>
+          <SideBarMenuList>
+            <MainMenuListData />
+          </SideBarMenuList>
         </SideBarMenuWrapper>
       </SideBarMenu>
     </>
   );
 };
 
+// Styled-components
 const animation = keyframes`
   0% {
     opacity: 0;
@@ -135,11 +103,5 @@ const SideBarMenuWrapper = styled.div`
 `;
 
 const SideBarMenuList = styled.ul``;
-
-const SideBarMenuCategory = styled.h2`
-  margin-top: 3rem;
-  margin-bottom: 0;
-`;
-const SideBarMenuTitle = styled.li``;
 
 export default SideBar;

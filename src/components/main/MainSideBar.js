@@ -72,11 +72,11 @@ const SideBarBackground = styled.div`
 const SideBarMenu = styled.div`
   display: ${(props) => props.display || 'flex'};
   position: fixed;
-  width: 30%;
+  width: 20rem;
   height: 100%;
   top: 0;
   right: 0;
-  background-color: white;
+  background-color: var(--color-white);
   border-left: 5rem solid var(--color-main-blue);
   z-index: 1;
   animation: ${animation} 500ms ease;
@@ -89,10 +89,10 @@ const SideBarBtnWrapper = styled.div`
 `;
 
 const SideXBtn = styled.i`
-  color: white;
+  color: var(--color-white);
   transition: all 300ms ease;
   &:hover {
-    color: black;
+    color: var(--color-black);
   }
 `;
 

@@ -183,7 +183,7 @@ const VocWrapper = styled.div`
   justify-content: center;
   width: 25rem;
   height: 30rem;
-  background-color: white;
+  background-color: var(--color-white);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -215,7 +215,7 @@ const VocFormDescriptionLength = styled.p`
   font-size: var(--font-super-micro);
   color: ${(props) => {
     if (props.vocLength >= 500) {
-      return 'red';
+      return 'var(--color-red)';
     }
   }};
 `;
@@ -260,7 +260,7 @@ const ConfirmWrapper = styled.div`
   align-items: center;
   width: 20rem;
   height: 7rem;
-  background-color: white;
+  background-color: var(--color-white);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

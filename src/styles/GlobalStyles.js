@@ -23,10 +23,13 @@ const GlobalStyles = createGlobalStyle`
 
   :root{
     /* 색상 */
-    --color-main-blue: #466CFF;
-    --color-dark-white: #bdbdbd;
+    --color-main-blue: #466cff;
+    --color-black: #000000;
     --color-grey: #616161;
     --color-light-grey: #7c7979;
+    --color-white: #ffffff;
+    --color-dark-white: #bdbdbd;
+    --color-red: #ff0000;
 
     /* 폰트 크기 */ 
     --font-large: 40px;
@@ -60,7 +63,7 @@ const GlobalStyles = createGlobalStyle`
 
   a {
     text-decoration: none;
-    color: black;
+    color: var(--color-black);
 
     &:hover {
       color: var(--color-main-blue);
@@ -68,7 +71,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   i {
-    color: black;
+    color: var(--color-black);
     font-weight: bold;
     text-decoration: none;
     cursor: pointer;

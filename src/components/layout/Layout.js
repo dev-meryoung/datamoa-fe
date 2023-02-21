@@ -5,7 +5,7 @@ import SubHeader from '../sub/SubHeader';
 import SubFooter from '../sub/SubFooter';
 
 const Layout = ({ children }) => {
-  // 현재 접속한 url의 경로명 확인
+  // 현재 접속한 URL의 경로명 확인
   const nowPathname = window.location.pathname;
   console.log(nowPathname);
 

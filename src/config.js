@@ -1,4 +1,4 @@
-const BASE_URL = 'http://192.168.195.43:3000';
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 export const API = {
   CATEGORY: `${BASE_URL}/category`,

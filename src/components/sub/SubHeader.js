@@ -1,4 +1,4 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -8,10 +8,15 @@ const SubHeader = (props) => {
   // 현재 접속한 URL의 경로명 확인
   const nowPathname = window.location.pathname;
 
+  // 로고 이미지를 클릭했을 때 페이지를 새로고침
+  const logoClickHandler = () => {
+    window.location.reload();
+  };
+
   const pickLogoImg = () => {
     if (nowPathname === '/toilet') {
       return (
-        <Link to="/toilet">
+        <Link to="/toilet" onClick={logoClickHandler}>
           <img src={toilet_logo} alt="logo" />
         </Link>
       );
@@ -27,7 +32,7 @@ const SubHeader = (props) => {
 
 const Wrapper = styled.header`
   width: 100%;
-  height: 50px;
+  height: 4rem;
   display: flex;
   align-items: center;
   justify-content: center;

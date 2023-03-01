@@ -7,7 +7,6 @@ import { API } from '../../config';
 const MainMenuListData = () => {
   // 카테고리 정보와 그에 속한 페이지 데이터를 저장하기 위한 State 값
   const [categoryData, setCategoryData] = useState([]);
-  const [subPageData, setSubPageData] = useState([]);
 
   // axios 통신을 이용해 카테고리와 페이지 정보를 가져와 저장
   useEffect(() => {
@@ -16,11 +15,6 @@ const MainMenuListData = () => {
         .then((res) => res.data)
         .then((data) => data.result);
       setCategoryData(category);
-
-      const subPage = await axios(API.SUBPAGE)
-        .then((res) => res.data)
-        .then((data) => data.result);
-      setSubPageData(subPage);
     };
 
     getResponse();
@@ -28,16 +22,16 @@ const MainMenuListData = () => {
 
   // 사이드바의 페이지 목록을 불러오는 함수
   const RenderMenuList = ({ categoryId }) => {
-    const menu = subPageData.filter((se) => se.categoryId === categoryId);
+    const menu = categoryData.filter((ce) => ce.categoryId === categoryId);
     return (
       <>
-        {menu.map((me) => (
-          <SideBarMenuPage key={me.pageId}>
-            <Link key={me.pageId} to={me.pageUrl}>
-              ─ {me.pageTitle}
-            </Link>
-          </SideBarMenuPage>
-        ))}
+        {menu.map((me) =>
+          me.pageDataArray.map((pe) => (
+            <SideBarMenuPage key={pe.pageId}>
+              <Link to={pe.pageUrl}>─ {pe.pageTitle}</Link>
+            </SideBarMenuPage>
+          ))
+        )}
       </>
     );
   };

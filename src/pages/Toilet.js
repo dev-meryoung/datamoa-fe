@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import Layout from '../components/layout/Layout';
 import { Helmet } from 'react-helmet';
-import KakaoMap from '../utils/KakaoMap';
+import NaverMap from '../components/common/NaverMap';
+import MapInfoList from '../components/common/MapInfoList';
 
 const Toilet = () => {
   return (
@@ -13,7 +14,12 @@ const Toilet = () => {
       <Layout>
         <Wrapper>
           <Content>
-            <KakaoMap />
+            <MapWrapper>
+              <NaverMap />
+            </MapWrapper>
+            <InfoWrapper>
+              <MapInfoList />
+            </InfoWrapper>
           </Content>
         </Wrapper>
       </Layout>
@@ -22,13 +28,41 @@ const Toilet = () => {
 };
 
 const Wrapper = styled.div`
-  width: 100%;
   display: flex;
+  width: 100%;
+  height: 28rem;
   align-items: center;
   justify-content: center;
   text-align: center;
+  margin: 1rem 0rem;
 `;
 
-const Content = styled.main``;
+const Content = styled.main`
+  display: flex;
+  width: 100%;
+  height: 100%;
+`;
+
+const MapWrapper = styled.div`
+  width: 70%;
+  height: 100%;
+  border: 1px solid var(--color-dark-white);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  margin-right: 1rem;
+`;
+
+const InfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30%;
+  height: 100%;
+  border: 1px solid var(--color-dark-white);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  box-sizing: border-box;
+`;
 
 export default Toilet;

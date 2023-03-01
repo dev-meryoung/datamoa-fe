@@ -28,6 +28,7 @@ const GlobalStyles = createGlobalStyle`
     --color-grey: #616161;
     --color-light-grey: #7c7979;
     --color-white: #ffffff;
+    --color-middle-white: #f2f2f2;
     --color-dark-white: #bdbdbd;
     --color-red: #ff0000;
 
@@ -139,6 +140,12 @@ const GlobalStyles = createGlobalStyle`
     &:focus {
       border: 2px solid var(--color-main-blue);
       outline: none;
+    }
+  }
+
+  input {
+    &::placeholder {
+      opacity: 0.5;
     }
   }
 

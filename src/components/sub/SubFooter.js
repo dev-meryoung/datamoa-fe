@@ -24,10 +24,10 @@ const SubFooter = () => {
         <VocModal clicked={vocClicked} fx={vocClickedHandler} />{' '}
         <IconWrapper>
           <Link to="/">
-            <i class="fa-solid fa-house"></i>
+            <i className="fa-solid fa-house"></i>
           </Link>
           　|　
-          <i class="fa-solid fa-headset" onClick={vocClickedHandler}></i>
+          <i className="fa-solid fa-headset" onClick={vocClickedHandler}></i>
         </IconWrapper>
       </>
     </Wrapper>
@@ -38,7 +38,7 @@ const Wrapper = styled.footer`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 50px;
+  height: 4rem;
   align-items: center;
   text-align: center;
   justify-content: center;

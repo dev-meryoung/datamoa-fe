@@ -60,7 +60,7 @@ const VocModal = (props) => {
   };
 
   // 문의 모달창의 전송 버튼이 눌렸을 때 실행할 동작
-  const VocSendHandler = () => {
+  const vocSendHandler = () => {
     // 전송할 데이터
     const data = {
       pageUrl: nowPathname,
@@ -153,7 +153,7 @@ const VocModal = (props) => {
           <a href="mailto:dev.meryoung@gmail.com">
             <EmailText>dev.meryoung@gmail.com</EmailText>
           </a>
-          <VocFormBtn onClick={VocSendHandler}>전송</VocFormBtn>
+          <VocFormBtn onClick={vocSendHandler}>전송</VocFormBtn>
         </VocForm>
       </VocWrapper>
       <ConfirmWrapper display={closeConfirm}>

@@ -20,6 +20,7 @@ const Layout = ({ children }) => {
 
 const Wrapper = styled.div`
   height: 100%;
+  margin: 0rem 2rem 0rem 2rem;
 `;
 
 export default Layout;

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import styled from 'styled-components';
+import { useEffect, useRef, useState } from 'react';
+import styled, { keyframes } from 'styled-components';
 import axios from 'axios';
 import search from '../../assets/imgs/search.png';
 import objectInfo from '../../assets/imgs/object_info.png';
@@ -7,7 +7,7 @@ import direction from '../../assets/imgs/direction.png';
 import toiletMarker from '../../assets/imgs/toilet_marker.png';
 import lastIndexOfUtil from '../../utils/lastIndexOfUtil';
 
-const MapInfoList = () => {
+const MapInfoList = (props) => {
   // 현재 접속한 URL의 경로명 확인
   const nowPathname = window.location.pathname;
   let marker = '';
@@ -16,6 +16,9 @@ const MapInfoList = () => {
   if (nowPathname === '/toilet') {
     marker = toiletMarker;
   }
+
+  // 네이버 지도의 중심으로 특정 좌표를 이동하기 위해 좌표 값을 설정하는 set 함수
+  const setCenterCoord = props.setCenterCoord;
 
   // 검색 창의 키워드를 담기 위한 state 값
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -28,6 +31,24 @@ const MapInfoList = () => {
 
   // 검색 결과가 없을 경우 메시지를 나타나게 할 state 값
   const [renderNoData, setRenderNoData] = useState('none');
+
+  // 특정 컴포넌트 외의 클릭을 감지하기 위한 ref 값
+  const excludedRef = useRef(null);
+
+  // 특정 컴포넌트의 클릭을 감지하여 검색 관련 컴포넌트가 맞는지 확인 후 동작 실행
+  useEffect(() => {
+    const outsideClickHandler = (e) => {
+      if (excludedRef.current && excludedRef.current.contains(e.target)) {
+        return;
+      }
+
+      // 만약 검색 관련 컴포넌트 바깥을 클릭했을 경우 검색 리스트 숨김
+      setRenderSearchList('none');
+    };
+
+    document.addEventListener('click', outsideClickHandler);
+    return () => document.removeEventListener('click', outsideClickHandler);
+  }, [excludedRef]);
 
   // 검색 창의 키워드를 담는 함수
   const onChangeContent = (e) => {
@@ -73,9 +94,15 @@ const MapInfoList = () => {
     }
   };
 
+  // 검색 목록에서 컴포넌트를 클릭했을 때 실행할 함수
+  const searchResultClickHandler = (lat, lng) => {
+    setCenterCoord({ lat: lat, lng: lng });
+    setRenderSearchList('none');
+  };
+
   return (
     <Wrapper>
-      <SearchWrapper>
+      <SearchWrapper ref={excludedRef}>
         <SearchBtn onClick={searchHandler} />
         <SearchText
           placeholder={'장소, 주소 검색'}
@@ -88,7 +115,10 @@ const MapInfoList = () => {
             <NoDataMessage>검색 결과 없음</NoDataMessage>
           </NoDataWrapper>
           {searchResult.map((e) => (
-            <SearchResult key={e.id}>
+            <SearchResult
+              key={e.id}
+              onClick={() => searchResultClickHandler(e.y, e.x)}
+            >
               <PlaceTitleWrapper>
                 <PlaceTitle>
                   {e.place_name}
@@ -128,6 +158,15 @@ const MapInfoList = () => {
     </Wrapper>
   );
 };
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
 const Wrapper = styled.div`
   height: 100%;
@@ -188,6 +227,7 @@ const SearchListWrapper = styled.div`
   background-color: var(--color-white);
   box-sizing: border-box;
   overflow-y: scroll;
+  animation: ${fadeIn} 500ms ease;
 
   & > div:not(:last-child) {
     border-bottom: 1px solid var(--color-dark-white);

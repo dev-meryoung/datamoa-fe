@@ -6,9 +6,20 @@ import toiletMarker from '../../assets/imgs/toilet_marker.png';
 
 const { naver } = window;
 
-const NaverMap = () => {
+const NaverMap = (props) => {
   const [map, setMap] = useState(null);
   const [bounds, setBounds] = useState(null);
+
+  // props로 받아온 검색 목록의 좌표가 변경될 때마다 지도의 중심 좌표를 변경
+  useEffect(() => {
+    if (map && props.centerCoord) {
+      const location = new naver.maps.LatLng(
+        props.centerCoord.lat,
+        props.centerCoord.lng
+      );
+      map.panTo(location);
+    }
+  }, [map, props.centerCoord]);
 
   // 기본 맵 초기화 과정
   useEffect(() => {

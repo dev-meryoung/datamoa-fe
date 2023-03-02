@@ -19,7 +19,7 @@ const Layout = ({ children }) => {
 };
 
 const Wrapper = styled.div`
-  height: 100%;
+  height: calc(100vh - 11rem);
   margin: 0rem 2rem 0rem 2rem;
 `;
 

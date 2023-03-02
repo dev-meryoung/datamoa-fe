@@ -3,8 +3,12 @@ import Layout from '../components/layout/Layout';
 import { Helmet } from 'react-helmet';
 import NaverMap from '../components/common/NaverMap';
 import MapInfoList from '../components/common/MapInfoList';
+import { useState } from 'react';
 
 const Toilet = () => {
+  // 검색 목록의 특정 위치에 해당하는 좌표를 관리하기 위한 state 값
+  const [centerCoord, setCenterCoord] = useState('');
+
   return (
     <>
       <Helmet>
@@ -15,10 +19,10 @@ const Toilet = () => {
         <Wrapper>
           <Content>
             <MapWrapper>
-              <NaverMap />
+              <NaverMap centerCoord={centerCoord} />
             </MapWrapper>
             <InfoWrapper>
-              <MapInfoList />
+              <MapInfoList setCenterCoord={setCenterCoord} />
             </InfoWrapper>
           </Content>
         </Wrapper>
@@ -30,7 +34,7 @@ const Toilet = () => {
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 28rem;
+  height: 100%;
   align-items: center;
   justify-content: center;
   text-align: center;

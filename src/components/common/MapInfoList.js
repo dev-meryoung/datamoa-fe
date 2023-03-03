@@ -322,6 +322,10 @@ const Object = styled.div`
   border: 1.5px solid var(--color-dark-white);
   border-radius: 0.5rem;
   box-sizing: border-box;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const ObjectImg = styled.img`

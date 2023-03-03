@@ -9,6 +9,9 @@ const Toilet = () => {
   // 검색 목록의 특정 위치에 해당하는 좌표를 관리하기 위한 state 값
   const [centerCoord, setCenterCoord] = useState('');
 
+  // 지도 위의 마커와 목록의 리스트를 1:1 매칭하기 위한 axios 통신 데이터 저장 state 값
+  const [markerData, setMarkerData] = useState({});
+
   return (
     <>
       <Helmet>
@@ -19,10 +22,17 @@ const Toilet = () => {
         <Wrapper>
           <Content>
             <MapWrapper>
-              <NaverMap centerCoord={centerCoord} />
+              <NaverMap
+                centerCoord={centerCoord}
+                markerData={markerData}
+                setMarkerData={setMarkerData}
+              />
             </MapWrapper>
             <InfoWrapper>
-              <MapInfoList setCenterCoord={setCenterCoord} />
+              <MapInfoList
+                setCenterCoord={setCenterCoord}
+                markerData={markerData}
+              />
             </InfoWrapper>
           </Content>
         </Wrapper>

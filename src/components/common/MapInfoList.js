@@ -20,6 +20,9 @@ const MapInfoList = (props) => {
   // 네이버 지도의 중심으로 특정 좌표를 이동하기 위해 좌표 값을 설정하는 set 함수
   const setCenterCoord = props.setCenterCoord;
 
+  // axios 통신으로 받아온 데이터를 담는 변수
+  const markerData = props.markerData;
+
   // 검색 창의 키워드를 담기 위한 state 값
   const [searchKeyword, setSearchKeyword] = useState('');
 
@@ -140,20 +143,24 @@ const MapInfoList = (props) => {
         </SearchListWrapper>
       </SearchWrapper>
       <ObjectListWrapper>
-        <Object>
-          <ObjectImg src={marker} />
-          <ObjectTitleWrapper>
-            <ObjectTitle>부천역</ObjectTitle>
-          </ObjectTitleWrapper>
-          <BtnWrapper>
-            <DirectionBtnWrapper>
-              <DirectionBtn src={direction} />
-            </DirectionBtnWrapper>
-            <ObjectInfoBtnWrapper>
-              <ObjectInfoBtn src={objectInfo} />
-            </ObjectInfoBtnWrapper>
-          </BtnWrapper>
-        </Object>
+        {markerData.length > 0
+          ? markerData.map((e) => (
+              <Object key={e.id}>
+                <ObjectImg src={marker} />
+                <ObjectTitleWrapper>
+                  <ObjectTitle>{e.nameArray[0]}</ObjectTitle>
+                </ObjectTitleWrapper>
+                <BtnWrapper>
+                  <DirectionBtnWrapper>
+                    <DirectionBtn src={direction} />
+                  </DirectionBtnWrapper>
+                  <ObjectInfoBtnWrapper>
+                    <ObjectInfoBtn src={objectInfo} />
+                  </ObjectInfoBtnWrapper>
+                </BtnWrapper>
+              </Object>
+            ))
+          : ''}
       </ObjectListWrapper>
     </Wrapper>
   );

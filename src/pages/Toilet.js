@@ -24,7 +24,6 @@ const Toilet = () => {
             <MapWrapper>
               <NaverMap
                 centerCoord={centerCoord}
-                markerData={markerData}
                 setMarkerData={setMarkerData}
               />
             </MapWrapper>

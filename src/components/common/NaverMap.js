@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { debounce } from 'lodash';
 import userLocation from '../../assets/imgs/user_location.png';
@@ -13,42 +13,22 @@ const NaverMap = (props) => {
   // 현재 보고 있는 맵의 넓이를 확인하기 위한 bounds를 저장하는 state 값
   const [bounds, setBounds] = useState(null);
 
-  // 맵에 표현된 마커의 목록을 관리하기 위한 state 값
-  const [markerDataList, setMarkerDataList] = useState([]);
+  // 맵에 표현된 마커의 목록을 관리하기 위한 ref 변수
+  const markerDataList = useRef([]);
 
   // axios 통신으로 받아온 데이터를 담기 위한 함수
   const setMarkerData = props.setMarkerData;
 
-  // 맵 이동 시에 동작하는 함수
-  const mapMovingHandler = useCallback(async () => {
-    deleteMarkerDataList();
+  // axios 통신으로 받아온 데이터를 담는 state 변수
+  const markerData = props.markerData;
 
-    const newMarkerData = await fetchData();
-
-    setMarkerData(newMarkerData);
-
-    const newMarkerDataList = await newMarkerData.map((data) => {
-      const location = new naver.maps.LatLng(data.lat, data.lng);
-
-      const markerOptions = {
-        position: location,
-        map: map,
-        icon: { url: toiletMarker, scaledSize: [35, 50] },
-      };
-      const marker = new naver.maps.Marker(markerOptions);
-
-      return marker;
-    });
-
-    setMarkerDataList(newMarkerDataList);
-  }, [map, setMarkerData]);
-
-  const fetchData = async () => {
+  // axios 통신을 이용해 데이터를 받아오는 함수
+  const getMarkerData = async () => {
     const data = [
       {
         id: 1,
         category: '공공화장실',
-        nameArray: ['부천1'],
+        nameArray: [`부천${Math.floor(Math.random() * 10) + 1}`],
         region: '경기도 부천시',
         address: '원미구 중동',
         management: '김대영',
@@ -60,7 +40,7 @@ const NaverMap = (props) => {
       {
         id: 2,
         category: '공공화장실',
-        nameArray: ['부천2'],
+        nameArray: [`부천${Math.floor(Math.random() * 10) + 1}`],
         region: '경기도 부천시',
         address: '원미구 중동',
         management: '김대영',
@@ -74,14 +54,41 @@ const NaverMap = (props) => {
     return data;
   };
 
-  // 맵 상의 모든 마커를 삭제하는 함수
-  const deleteMarkerDataList = () => {
-    markerDataList.forEach((e) => {
-      e.setMap(null);
-    });
+  // 맵 이동 시에 동작하는 함수
+  const mapMovingHandler = useCallback(async () => {
+    // axios 통신을 이용해 마커 정보를 가져와 state 변수에 설정
+    setMarkerData(await getMarkerData());
+  }, [setMarkerData]);
 
-    setMarkerDataList([]);
-  };
+  // markerData 값이 변경되었을 때 기존의 마커를 삭제하고 새로운 마커를 나타내는 로직
+  useEffect(() => {
+    // 만약 이전에 markerData를 불러와 마커를 만들었다면 지도에서 해당 마커를 모두 비움
+    if (markerDataList.current.length > 0) {
+      markerDataList.current.forEach((e) => {
+        e.setMap(null);
+      });
+    }
+
+    // 만약 받아온 markerData가 있을 경우 지도 상에 마커로 모두 나타냄
+    if (markerData.length > 0) {
+      const newMarkerDataList = markerData.map((data) => {
+        const location = new naver.maps.LatLng(data.lat, data.lng);
+
+        const markerOptions = {
+          position: location,
+          map: map,
+          icon: { url: toiletMarker, scaledSize: [35, 50] },
+        };
+
+        const marker = new naver.maps.Marker(markerOptions);
+
+        return marker;
+      });
+
+      // 마커 리스트 목록에 현재의 마커 목록을 최신화함 (새로운 데이터를 받아올 때 삭제하기 위해)
+      markerDataList.current = newMarkerDataList;
+    }
+  }, [map, markerData]);
 
   // props로 받아온 검색 목록의 좌표가 변경될 때마다 지도의 중심 좌표를 변경
   useEffect(() => {
@@ -102,7 +109,7 @@ const NaverMap = (props) => {
       const location = new naver.maps.LatLng(latitude, longitude);
       const mapOptions = {
         center: location,
-        zoom: 16,
+        zoom: 17,
         zoomControl: true,
         zoomControlOptions: {
           style: naver.maps.ZoomControlStyle.SMALL,
@@ -128,7 +135,7 @@ const NaverMap = (props) => {
       const location = new naver.maps.LatLng(37.5006, 126.8677);
       const mapOptions = {
         center: location,
-        zoom: 16,
+        zoom: 17,
         zoomControl: true,
       };
       const map = new naver.maps.Map('map', mapOptions);

@@ -5,4 +5,5 @@ export const API = {
   SUBPAGE: `${BASE_URL}/subpage`,
   VOC_CATEGORY: `${BASE_URL}/voc/category`,
   VOC: `${BASE_URL}/voc`,
+  TOILET_INFO: `${BASE_URL}/toilet/map/info`,
 };

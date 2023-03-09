@@ -23,6 +23,12 @@ const MapInfoList = (props) => {
   // axios 통신으로 받아온 데이터를 담는 변수
   const markerData = props.markerData;
 
+  // 목록에서 클릭한 컴포넌트를 강조하기 위한 핸들러
+  const objectClickHandler = props.clickHandler;
+
+  // 현재 클릭된 컴포넌트를 확인하기 위한 변수
+  const clicked = props.clicked;
+
   // 검색 창의 키워드를 담기 위한 state 값
   const [searchKeyword, setSearchKeyword] = useState('');
 
@@ -145,7 +151,13 @@ const MapInfoList = (props) => {
       <ObjectListWrapper>
         {markerData.length > 0
           ? markerData.map((e) => (
-              <Object key={e.id}>
+              <Object
+                key={e.id}
+                onClick={() => {
+                  objectClickHandler(e.id);
+                }}
+                clicked={e.id === clicked}
+              >
                 <ObjectImg src={marker} />
                 <ObjectTitleWrapper>
                   <ObjectTitle>{e.nameArray[0]}</ObjectTitle>
@@ -326,7 +338,10 @@ const Object = styled.div`
   justify-content: space-between;
   padding: 0.7rem 1rem;
   margin-top: 0.5rem;
-  border: 1.5px solid var(--color-dark-white);
+  border: ${(props) =>
+    props.clicked
+      ? '2px solid var(--color-main-blue)'
+      : '1.5px solid var(--color-dark-white)'};
   border-radius: 0.5rem;
   box-sizing: border-box;
 

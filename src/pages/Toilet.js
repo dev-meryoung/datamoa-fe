@@ -12,6 +12,14 @@ const Toilet = () => {
   // 지도 위의 마커와 목록의 리스트를 1:1 매칭하기 위한 axios 통신 데이터 저장 state 값
   const [markerData, setMarkerData] = useState({});
 
+  // 화장실 목록에서 현재 클릭된 대상을 관리하기 위한 state 값
+  const [clicked, setClicked] = useState('');
+
+  // 클릭된 대상을 관리하기 위한 핸들러
+  const clickHandler = (id) => {
+    setClicked(id);
+  };
+
   return (
     <>
       <Helmet>
@@ -26,12 +34,16 @@ const Toilet = () => {
                 centerCoord={centerCoord}
                 setMarkerData={setMarkerData}
                 markerData={markerData}
+                clickHandler={clickHandler}
+                clicked={clicked}
               />
             </MapWrapper>
             <InfoWrapper>
               <MapInfoList
                 setCenterCoord={setCenterCoord}
                 markerData={markerData}
+                clickHandler={clickHandler}
+                clicked={clicked}
               />
             </InfoWrapper>
           </Content>

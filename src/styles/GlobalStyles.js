@@ -60,6 +60,11 @@ const GlobalStyles = createGlobalStyle`
 
   p {
     font-size: var(--font-small);
+    -ms-user-select: none; 
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   a {

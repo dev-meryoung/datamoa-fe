@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { debounce } from 'lodash';
 import axios from 'axios';
 import userLocation from '../../assets/imgs/user_location.png';
@@ -30,8 +30,14 @@ const NaverMap = (props) => {
   // 사용자의 현 위치 좌표를 저장하기 위한 state 값
   const [userCoord, setUserCoord] = useState({ lat: 37.5006, lng: 126.8677 });
 
+  // 줌 레벨 관련 메시지 모달을 닫기 위한 State 값
+  const [zoomMessage, setZoomMessage] = useState('none');
+
   // 맵에 표현된 마커의 목록을 관리하기 위한 ref 변수
   const markerDataList = useRef([]);
+
+  // 줌 레벨 관련 메시지 모달을 띄우는 시간을 관리하기 위한 ref 변수
+  const timer = useRef('');
 
   // 검색 목록에서 클릭한 장소 및 주소로 지도를 이동하기 위한 중심 좌표 값
   const centerCoord = props.centerCoord;
@@ -47,6 +53,9 @@ const NaverMap = (props) => {
 
   // 현재 클릭된 마커 확인하기 위한 변수
   const clicked = props.clicked;
+
+  // 현재 클릭된 마커를 설정하기 위한 함수
+  const setClicked = props.setClicked;
 
   // axios 통신을 이용해 데이터를 받아오는 함수
   const getMarkerData = useCallback(async () => {
@@ -67,8 +76,20 @@ const NaverMap = (props) => {
     // 지도의 확대 레벨이 16 이상일 때만, axios 통신을 이용해 마커 정보를 가져와 state 변수에 설정
     if (map.getZoom() >= 15) {
       setMarkerData(await getMarkerData());
+
+      // 기존에 클릭됐던 마커 설정을 초기화
+      setClicked('');
     }
-  }, [map, setMarkerData, getMarkerData]);
+  }, [map, setMarkerData, getMarkerData, setClicked]);
+
+  // 줌 레벨 관련 메시지를 표시하기 위한 함수
+  const openZoomMessage = useCallback(() => {
+    setZoomMessage('flex');
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => {
+      setZoomMessage('none');
+    }, 2500);
+  }, [setZoomMessage]);
 
   // markerData 값이 변경되었을 때 기존의 마커를 삭제하고 새로운 마커를 나타내는 로직
   useEffect(() => {
@@ -194,6 +215,7 @@ const NaverMap = (props) => {
   // 초기화된 맵이 생성되면 사용자가 바라보는 지도의 좌측 하단 및 우측 상단 좌표 계산
   useEffect(() => {
     if (map) {
+      // 맵 자체 이벤트 부여 로직
       // 초기 생성 시
       map.addListener('tilesloaded', () => {
         const bounds = map.getBounds();
@@ -209,6 +231,21 @@ const NaverMap = (props) => {
         });
       });
 
+      // 줌 레벨 변경 시
+      map.addListener('zoom_changed', () => {
+        // 줌 레벨이 15보다 작을 경우, 지도의 모든 마커를 지우고 가져온 데이터를 삭제한 뒤 알림 메시지 출력
+        if (map.getZoom() < 15) {
+          if (markerDataList.current.length > 0) {
+            markerDataList.current.forEach((e) => {
+              e.setMap(null);
+            });
+          }
+          setMarkerData([]);
+
+          openZoomMessage();
+        }
+      });
+
       // 지도의 이동 및 크기 변경이 생겼을 시
       const listener = map.addListener('bounds_changed', () => {
         const bounds = map.getBounds();
@@ -222,13 +259,25 @@ const NaverMap = (props) => {
             lng: bounds.getNE().lng(),
           },
         });
+
+        // 줌 레벨이 15보다 작을 경우, 지도의 모든 마커를 지우고 가져온 데이터를 삭제한 뒤 알림 메시지 출력
+        if (map.getZoom() < 15) {
+          if (markerDataList.current.length > 0) {
+            markerDataList.current.forEach((e) => {
+              e.setMap(null);
+            });
+          }
+          setMarkerData([]);
+
+          openZoomMessage();
+        }
       });
 
       return () => {
         naver.maps.Event.removeListener(listener);
       };
     }
-  }, [map]);
+  }, [map, setMarkerData, openZoomMessage]);
 
   // 확대, 축소, 지도의 이동 등의 이벤트로 bounds 값이 변경되면 실행할 동작
   useEffect(() => {
@@ -239,8 +288,28 @@ const NaverMap = (props) => {
     }
   }, [map, bounds, mapMovingHandler]);
 
-  return <MapWrapper id="map"></MapWrapper>;
+  return (
+    <>
+      <MapWrapper id="map">
+        <ConfirmWrapper display={zoomMessage}>
+          <ConfirmCenterDescription>
+            화장실 위치 정보 확인을 위해 지도를 확대해 주세요.
+          </ConfirmCenterDescription>
+        </ConfirmWrapper>
+      </MapWrapper>
+    </>
+  );
 };
+
+const animation = keyframes`
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+`;
 
 const MapWrapper = styled.div`
   width: 100%;
@@ -251,6 +320,34 @@ const MapWrapper = styled.div`
   &:focus {
     outline: none;
   }
+`;
+
+const ConfirmWrapper = styled.div`
+  display: ${(props) => props.display || 'flex'};
+  position: absolute;
+  white-space: pre-line;
+  justify-content: center;
+  align-items: center;
+  width: 20rem;
+  height: 2rem;
+  background-color: var(--color-white);
+  bottom: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  z-index: 2;
+  animation: ${animation} 500ms ease;
+`;
+
+const ConfirmCenterDescription = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--font-small);
+  font-weight: bold;
+  cursor: default;
 `;
 
 export default NaverMap;

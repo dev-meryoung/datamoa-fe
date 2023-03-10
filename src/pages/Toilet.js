@@ -35,6 +35,7 @@ const Toilet = () => {
                 setMarkerData={setMarkerData}
                 markerData={markerData}
                 clickHandler={clickHandler}
+                setClicked={setClicked}
                 clicked={clicked}
               />
             </MapWrapper>

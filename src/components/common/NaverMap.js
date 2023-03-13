@@ -283,7 +283,7 @@ const NaverMap = (props) => {
   useEffect(() => {
     const debounceMapMovingHandler = debounce(mapMovingHandler, 300);
     if (bounds) {
-      debounceMapMovingHandler();
+      debounceMapMovingHandler(bounds);
       return debounceMapMovingHandler.cancel;
     }
   }, [map, bounds, mapMovingHandler]);

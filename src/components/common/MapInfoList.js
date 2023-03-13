@@ -322,7 +322,7 @@ const ObjectListWrapper = styled.div`
   justify-content: flex-start;
   text-align: center;
   width: 100%;
-  height: 85%;
+  height: calc(100% - 3.8rem);
   border-top: 1px solid var(--color-dark-white);
   margin-top: 0.5rem;
   box-sizing: border-box;

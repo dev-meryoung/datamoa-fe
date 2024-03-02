@@ -1,0 +1,26 @@
+    <link rel="icon" type="image/x-icon" href="./toilet_favicon.ico" />
+    <title>화장실 위치찾기</title>
+    <link rel="canonical" href="https://datamoa.kr/toilet" />
+    <meta
+      name="keywords"
+      content="위치찾기, 화장실, 공중화장실, 화장실 위치찾기, 주변 화장실, 근처 화장실, 급똥"
+    />
+    <meta
+      name="description"
+      content="내 주변 가장 가까운 화장실은 어디에 있을까?"
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:url" content="https://datamoa.kr/toilet" />
+    <meta name="twitter:title" content="화장실 위치찾기" />
+    <meta
+      name="twitter:description"
+      content="내 주변 가장 가까운 화장실은 어디에 있을까?"
+    />
+    <meta name="twitter:image" content="https://datamoa.kr/main_og_img.png" />
+    <meta property="og:title" content="화장실 위치찾기" />
+    <meta property="og:url" content="https://datamoa.kr/toilet" />
+    <meta property="og:image" content="https://datamoa.kr/main_og_img.png" />
+    <meta
+      property="og:description"
+      content="내 주변 가장 가까운 화장실은 어디에 있을까?"
+    />

@@ -1,0 +1,26 @@
+    <link rel="icon" type="image/x-icon" href="./toto_favicon.ico" />
+    <title>복권방 위치찾기</title>
+    <link rel="canonical" href="https://datamoa.kr/toto" />
+    <meta
+      name="keywords"
+      content="위치찾기, 복권방, 토토방, 로또방, 로또, 토토, 프로토, 스포츠토토, 복권, 연금복권, 스피또, 복권방 위치찾기, 주변 복권방, 근처 복권방, 배팅"
+    />
+    <meta
+      name="description"
+      content="내 주변 가장 가까운 복권방은 어디에 있을까?"
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:url" content="https://datamoa.kr/toto" />
+    <meta name="twitter:title" content="복권방 위치찾기" />
+    <meta
+      name="twitter:description"
+      content="내 주변 가장 가까운 복권방은 어디에 있을까?"
+    />
+    <meta name="twitter:image" content="https://datamoa.kr/main_og_img.png" />
+    <meta property="og:title" content="복권방 위치찾기" />
+    <meta property="og:url" content="https://datamoa.kr/toto" />
+    <meta property="og:image" content="https://datamoa.kr/main_og_img.png" />
+    <meta
+      property="og:description"
+      content="내 주변 가장 가까운 복권방은 어디에 있을까?"
+    />

@@ -1,0 +1,26 @@
+    <link rel="icon" type="image/x-icon" href="./main_favicon.ico" />
+    <title>데이터모아</title>
+    <link rel="canonical" href="https://datamoa.kr" />
+    <meta
+      name="keywords"
+      content="데이터모아, 위치찾기, 화장실, 화장실 위치찾기, 주변 화장실, 근처 화장실, 복권방, 복권방 위치찾기, 주변 복권방, 근처 복권방"
+    />
+    <meta
+      name="description"
+      content="데이터를 모아, 정보의 가치를 높입니다."
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:url" content="https://datamoa.kr" />
+    <meta name="twitter:title" content="데이터모아" />
+    <meta
+      name="twitter:description"
+      content="데이터를 모아, 정보의 가치를 높입니다."
+    />
+    <meta name="twitter:image" content="https://datamoa.kr/main_og_img.png" />
+    <meta property="og:title" content="데이터모아" />
+    <meta property="og:url" content="https://datamoa.kr" />
+    <meta property="og:image" content="https://datamoa.kr/main_og_img.png" />
+    <meta
+      property="og:description"
+      content="데이터를 모아, 정보의 가치를 높입니다."
+    />
